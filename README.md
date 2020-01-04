@@ -22,6 +22,8 @@ Enables or disables forced decompression of upstream content.
 ## Other Comments
 Make sure you comment / remove `proxy_set_header Accept-Encoding "";` from your nginx configuration, otherwise your upstream server won't compress any content!
 
+It should also go without saying, you must enable the gunzip module itself `gunzip on;` for the gunzip force option to work.
+
 I set my upstream server to use gzip level 1 to maximize speed since nginx will recompress the content.
 
 ## Original Author
