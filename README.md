@@ -6,6 +6,8 @@ This serves multiple purposes:
 - Some modules require upstream content to be uncompressed to work properly.
 - It allows nginx to recompress the data (i.e. [brotli](https://github.com/google/ngx_brotli "brotli")) before sending to the client.
 
+This has been successfully tested up to version 1.17.7 (the current release as of this writing). I don't think the gunzip module code changes much (if any), so it should patch cleanly against older / future versions.
+
 ## Configuration Directives
 
 ### `gunzip_force`
