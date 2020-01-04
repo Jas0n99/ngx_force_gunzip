@@ -1,0 +1,58 @@
+--- src/http/modules/ngx_http_gunzip_filter_module.c
++++ src/http/modules/ngx_http_gunzip_filter_module_NEW.c
+@@ -15,6 +15,7 @@
+ 
+ typedef struct {
+     ngx_flag_t           enable;
++    ngx_flag_t           force;
+     ngx_bufs_t           bufs;
+ } ngx_http_gunzip_conf_t;
+ 
+@@ -71,6 +72,13 @@
+       offsetof(ngx_http_gunzip_conf_t, enable),
+       NULL },
+ 
++    { ngx_string("gunzip_force"),
++      NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_CONF_FLAG,
++      ngx_conf_set_flag_slot,
++      NGX_HTTP_LOC_CONF_OFFSET,
++      offsetof(ngx_http_gunzip_conf_t, force),
++      NULL },
++
+     { ngx_string("gunzip_buffers"),
+       NGX_HTTP_MAIN_CONF|NGX_HTTP_SRV_CONF|NGX_HTTP_LOC_CONF|NGX_CONF_TAKE2,
+       ngx_conf_set_bufs_slot,
+@@ -138,6 +146,8 @@
+         return ngx_http_next_header_filter(r);
+     }
+ 
++    if (!conf->force) {
++
+     r->gzip_vary = 1;
+ 
+     if (!r->gzip_tested) {
+@@ -149,6 +159,8 @@
+         return ngx_http_next_header_filter(r);
+     }
+ 
++    }
++
+     ctx = ngx_pcalloc(r->pool, sizeof(ngx_http_gunzip_ctx_t));
+     if (ctx == NULL) {
+         return NGX_ERROR;
+@@ -654,6 +666,7 @@
+      */
+ 
+     conf->enable = NGX_CONF_UNSET;
++    conf->force  = NGX_CONF_UNSET;
+ 
+     return conf;
+ }
+@@ -666,6 +679,7 @@
+     ngx_http_gunzip_conf_t *conf = child;
+ 
+     ngx_conf_merge_value(conf->enable, prev->enable, 0);
++    ngx_conf_merge_value(conf->force, prev->force, 0);
+ 
+     ngx_conf_merge_bufs_value(conf->bufs, prev->bufs,
+                               (128 * 1024) / ngx_pagesize, ngx_pagesize);
