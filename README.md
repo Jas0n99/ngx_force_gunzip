@@ -1,5 +1,5 @@
 # Nginx Force Gunzip Module
-This is a simple patch modifying the gunzip filter module to force inflate compressed responses from an upstream server.
+This is a simple patch modifying the [gunzip filter module](http://nginx.org/en/docs/http/ngx_http_gunzip_module.html "gunzip filter module") to force inflate compressed responses from an upstream source.
 
 This serves multiple purposes:
 - It greatly reduces network bandwidth between nginx and upstream server(s).
@@ -7,6 +7,8 @@ This serves multiple purposes:
 - It allows nginx to recompress the data (i.e. [brotli](https://github.com/google/ngx_brotli "brotli")) before sending to the client.
 
 This has been successfully tested up to version 1.17.7 (the current release as of this writing). I don't think the gunzip module code changes much (if any), so it should patch cleanly against older / future versions.
+
+**NOTE:** The gunzip module is not built by default, you must specify `--with-http_gunzip_module` when compiling nginx.
 
 ## Configuration Directives
 
@@ -17,8 +19,8 @@ This has been successfully tested up to version 1.17.7 (the current release as o
 
 Enables or disables forced decompression of upstream content.
 
-## Comments
-Make sure you comment / remove `proxy_set_header   Accept-Encoding "";` from your nginx configuration, otherwise your upstream server won't compress any content!
+## Other Comments
+Make sure you comment / remove `proxy_set_header Accept-Encoding "";` from your nginx configuration, otherwise your upstream server won't compress any content!
 
 I set my upstream server to use gzip level 1 to maximize speed since nginx will recompress the content.
 
