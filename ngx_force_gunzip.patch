@@ -1,3 +1,17 @@
+Summary:
+  A simple patch modifying the gunzip filter module to force inflate compressed responses from an upstream source.
+
+Configuration Directives:
+  syntax: gunzip_force on|off
+  default: off
+  context: http, server, location
+
+This Source:
+  https://github.com/Jas0n99/ngx_force_gunzip
+
+Original Source:
+  http://mailman.nginx.org/pipermail/nginx-devel/2013-January/003276.html
+
 --- src/http/modules/ngx_http_gunzip_filter_module.c
 +++ src/http/modules/ngx_http_gunzip_filter_module_NEW.c
 @@ -15,6 +15,7 @@
