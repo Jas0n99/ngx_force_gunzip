@@ -1,5 +1,5 @@
 # Nginx Force Gunzip Module
-This is a simple patch modifying the [gunzip filter module](http://nginx.org/en/docs/http/ngx_http_gunzip_module.html "gunzip filter module") to force inflate compressed responses from an upstream source.
+This is a simple patch modifying the NGINX [gunzip filter module](http://nginx.org/en/docs/http/ngx_http_gunzip_module.html "gunzip filter module") to force inflate compressed responses from an upstream source.
 
 This serves multiple purposes:
 - It greatly reduces network bandwidth between nginx and upstream server(s).
