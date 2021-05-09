@@ -2,7 +2,7 @@
 This is a simple patch modifying the NGINX [gunzip filter module](http://nginx.org/en/docs/http/ngx_http_gunzip_module.html "gunzip filter module") to force inflate compressed responses. This is desirable in the context of an upstream source that sends responses gzipped. Please read the "other comments" section to understand this will decompress *all* content, so you want to specify its use as specific as possible to avoid decompressing content that you otherwise would want left untouched.
 
 This serves multiple purposes:
-- It maintains transfering gziped content between upstream server(s) and nginx, thus reducing network bandwidth.
+- It maintains transfering gzipped content between upstream server(s) and nginx, thus reducing network bandwidth.
 - Some modules require the upstream content to be uncompressed to work properly.
 - It allows nginx to recompress the data (i.e. [brotli](https://github.com/google/ngx_brotli "brotli")) before sending to the client.
 
